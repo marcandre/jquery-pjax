@@ -191,6 +191,23 @@ if ($.support.pjax) {
     start()
   })
 
+  asyncTest("ignores event with prevented default", function() {
+    var frame = this.frame
+
+    expect(0);
+
+    frame.$("#main").pjax("a").on("pjax:click", function() {
+      ok(false, "Event should have been ignored")
+    })
+    frame.$("a[href='/dinosaurs.html']").on("click", function(event) {
+      event.preventDefault()
+    })
+
+    frame.$("a[href='/dinosaurs.html']").click()
+    start()
+  })
+
+
   asyncTest("scrolls to anchor after load", function() {
     var frame = this.frame
 
